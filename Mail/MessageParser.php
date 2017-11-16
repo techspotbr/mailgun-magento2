@@ -42,6 +42,13 @@ class MessageParser
         $text = quoted_printable_decode($text);
         $html = quoted_printable_decode($html);
 
+        $attachments = [];
+        foreach ($this->message->getParts() as $part) { /** @var \Zend_Mime_Part $part */
+            if ($part->disposition == 'attachment') {
+                $attachments[] = $part;
+            }
+        }
+
         return [
             'from' => $this->message->getFrom(),
             'reply-to' => $this->message->getReplyTo(),
@@ -51,7 +58,7 @@ class MessageParser
             'bcc' => $this->parseRecipients('Bcc'),
             'html' => $html ?: null,
             'text' => $text ?: null,
-            'attachment' => []
+            'attachment' => $attachments,
         ];
     }
 
@@ -74,7 +81,15 @@ class MessageParser
                 continue;
             }
 
-            $result[] = trim($recipient);
+            if (preg_match('/<(.*)>/', $recipient, $matches)) {
+                $recipientAddress = $matches[1];
+            } else {
+                $recipientAddress = $recipient;
+            }
+
+            if (in_array($recipientAddress, $all)) {
+                $result[] = trim($recipient);
+            }
         }
 
         return $result;
