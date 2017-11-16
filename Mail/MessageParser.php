@@ -58,7 +58,7 @@ class MessageParser
             'bcc' => $this->parseRecipients('Bcc'),
             'html' => $html ?: null,
             'text' => $text ?: null,
-            'attachment' => $attachments,
+            'attachments' => $attachments,
         ];
     }
 
