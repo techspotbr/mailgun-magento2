@@ -1,6 +1,6 @@
 <?php
 
-namespace Bogardo\Mailgun\Helper;
+namespace Andelux\Mailgun\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
@@ -29,7 +29,7 @@ class Config extends AbstractHelper
      */
     public function enabled()
     {
-        return (bool) $this->scopeConfig->getValue('bogardo_mailgun/api/enabled', ScopeInterface::SCOPE_STORE);
+        return (bool) $this->scopeConfig->getValue('andelux_mailgun/api/enabled', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -37,7 +37,7 @@ class Config extends AbstractHelper
      */
     public function domain()
     {
-        return $this->scopeConfig->getValue('bogardo_mailgun/api/domain', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('andelux_mailgun/api/domain', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -45,7 +45,7 @@ class Config extends AbstractHelper
      */
     public function privateKey()
     {
-        return $this->scopeConfig->getValue('bogardo_mailgun/api/private_key', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('andelux_mailgun/api/private_key', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -53,7 +53,7 @@ class Config extends AbstractHelper
      */
     public function publicKey()
     {
-        return $this->scopeConfig->getValue('bogardo_mailgun/api/public_key', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('andelux_mailgun/api/public_key', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -61,7 +61,7 @@ class Config extends AbstractHelper
      */
     public function testMode()
     {
-        return (bool) $this->scopeConfig->getValue('bogardo_mailgun/general/test_mode', ScopeInterface::SCOPE_STORE);
+        return (bool) $this->scopeConfig->getValue('andelux_mailgun/general/test_mode', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -69,7 +69,7 @@ class Config extends AbstractHelper
      */
     public function endpoint()
     {
-        return $this->scopeConfig->getValue('bogardo_mailgun/developer/endpoint', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('andelux_mailgun/developer/endpoint', ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -81,7 +81,7 @@ class Config extends AbstractHelper
             return 'v3';
         }
 
-        return $this->scopeConfig->getValue('bogardo_mailgun/developer/postbin_key', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('andelux_mailgun/developer/postbin_key', ScopeInterface::SCOPE_STORE);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bogardo\Mailgun\Mail;
+namespace Andelux\Mailgun\Mail;
 
-use Bogardo\Mailgun\Helper\Config as Config;
+use Andelux\Mailgun\Helper\Config as Config;
 use InvalidArgumentException;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Mail\MessageInterface;
@@ -17,7 +17,7 @@ class Transport extends MagentoTransport implements TransportInterface
 {
 
     /**
-     * @var \Bogardo\Mailgun\Helper\Config
+     * @var \Andelux\Mailgun\Helper\Config
      */
     protected $config;
 

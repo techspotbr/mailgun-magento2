@@ -1,6 +1,6 @@
 <?php
 
-namespace Bogardo\Mailgun\Mail;
+namespace Andelux\Mailgun\Mail;
 
 use Magento\Framework\Mail\MessageInterface;
 
