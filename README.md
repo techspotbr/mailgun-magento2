@@ -30,6 +30,9 @@ You can access the mail logs in your [Mailgun control panel](https://mailgun.com
 
 ## Changelog
 
+#### 0.1.7
+- Fixed error in attachments
+
 #### 0.1.6
 - Forked from [Bogardo/Mailgun-Magento2](https://github.com/Bogardo/Mailgun-Magento2)
 - Fixed some bugs about recipients and attachments
