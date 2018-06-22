@@ -2,7 +2,7 @@
     "name": "andelux/mailgun-magento2",
     "description": "Send Magento's transactional emails with the Mailgun API",
     "type": "magento2-module",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "license": "MIT",
     "authors": [
         {
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "~5.5.0|~5.6.0|~7.0",
+        "php": "~5.5.0|~5.6.0|~7.0|~7.1",
         "magento/magento-composer-installer": "*",
         "mailgun/mailgun-php": "~2.0",
         "php-http/guzzle6-adapter": "^1.0"
