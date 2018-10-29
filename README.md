@@ -11,7 +11,7 @@ Send Magento's transactional e-mails with the [Mailgun API](http://www.mailgun.c
 Install using composer
 
 ```bash
-composer require andelux/mailgun-magento2
+composer require tanolalano/mailgun-magento2
 ```
 
 ### Configuration
@@ -29,6 +29,9 @@ All transactional email that are send by your Magento application are now send u
 You can access the mail logs in your [Mailgun control panel](https://mailgun.com/app/logs).
 
 ## Changelog
+
+#### 0.1.9
+- Using mailgun-php 2.4 the last version working with magento2
 
 #### 0.1.7
 - Fixed error in attachments
