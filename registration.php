@@ -2,4 +2,4 @@
 
 use Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Andelux_Mailgun', __DIR__);
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Tanolalano_Mailgun', __DIR__);
