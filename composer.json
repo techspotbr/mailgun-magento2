@@ -1,8 +1,8 @@
 {
-    "name": "andelux/mailgun-magento2",
+    "name": "Tanolalano/mailgun-magento2",
     "description": "Send Magento's transactional emails with the Mailgun API",
     "type": "magento2-module",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "license": "MIT",
     "authors": [
         {
