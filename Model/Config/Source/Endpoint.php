@@ -8,7 +8,7 @@
  * Used in creating options for Yes|No|Specified config value selection
  *
  */
-namespace Andelux\Mailgun\Model\Config\Source;
+namespace Tanolalano\Mailgun\Model\Config\Source;
 
 class Endpoint implements \Magento\Framework\Option\ArrayInterface
 {
