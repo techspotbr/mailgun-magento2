@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Andelux\\Mailgun\\": ""
+            "Tanolalano\\Mailgun\\": ""
         },
         "files": [
             "registration.php"
