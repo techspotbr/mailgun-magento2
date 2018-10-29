@@ -1,6 +1,6 @@
 <?php
 
-namespace Andelux\Mailgun\Mail;
+namespace Tanolalano\Mailgun\Mail;
 
 use Magento\Framework\Mail\MessageInterface;
 
