@@ -1,8 +1,8 @@
 # Magento 2 Mailgun module
 
-[![Latest Stable Version](https://poser.pugx.org/andelux/mailgun-magento2/v/stable?format=flat-square)](https://packagist.org/packages/andelux/mailgun-magento2)
-[![Monthly Downloads](https://poser.pugx.org/andelux/mailgun-magento2/d/monthly?format=flat-square)](https://packagist.org/packages/andelux/mailgun-magento2)
-[![License](https://poser.pugx.org/andelux/mailgun-magento2/license?format=flat-square)](https://packagist.org/packages/andelux/mailgun-magento2)
+[![Latest Stable Version](https://poser.pugx.org/andelux/mailgun-magento2/v/stable?format=flat-square)](https://packagist.org/packages/tanolalano/mailgun-magento2)
+[![Monthly Downloads](https://poser.pugx.org/andelux/mailgun-magento2/d/monthly?format=flat-square)](https://packagist.org/packages/tanolalano/mailgun-magento2)
+[![License](https://poser.pugx.org/tanolalano/mailgun-magento2/license?format=flat-square)](https://packagist.org/packages/andelux/mailgun-magento2)
 
 Send Magento's transactional e-mails with the [Mailgun API](http://www.mailgun.com/).
 
