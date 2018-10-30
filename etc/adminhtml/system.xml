@@ -52,7 +52,7 @@
 
                 <field id="endpoint" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API Endpoint</label>
-                    <source_model>Andelux\Mailgun\Model\Config\Source\Endpoint</source_model>
+                    <source_model>Tanolalano\Mailgun\Model\Config\Source\Endpoint</source_model>
                 </field>
 
                 <field id="postbin_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
