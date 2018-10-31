@@ -1,8 +1,8 @@
 <?php
 
-namespace Andelux\Mailgun\Mail;
+namespace Tanolalano\Mailgun\Mail;
 
-use Andelux\Mailgun\Helper\Config as Config;
+use Tanolalano\Mailgun\Helper\Config as Config;
 use InvalidArgumentException;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Mail\MessageInterface;
