@@ -1,17 +1,15 @@
 <?php
 
-namespace Tanolalano\Mailgun\Mail;
+namespace MageMontreal\Mailgun\Mail;
 
-use Tanolalano\Mailgun\Helper\Config as Config;
+use MageMontreal\Mailgun\Helper\Config;
 use InvalidArgumentException;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\Transport as MagentoTransport;
 use Magento\Framework\Mail\TransportInterface;
-use Magento\Framework\Phrase;
 use Mailgun\Mailgun;
 use Mailgun\Messages\MessageBuilder;
-use Zend_Mail;
 
 class Transport extends MagentoTransport implements TransportInterface
 {
@@ -22,7 +20,7 @@ class Transport extends MagentoTransport implements TransportInterface
     protected $config;
 
     /**
-     * @var \Magento\Framework\Mail\MessageInterface|Zend_Mail
+     * @var \Magento\Framework\Mail\MessageInterface
      */
     protected $message;
 
@@ -46,6 +44,8 @@ class Transport extends MagentoTransport implements TransportInterface
      * Send a mail using this transport
      *
      * @return void
+     *
+     * @throws \Exception
      */
     public function sendMessage()
     {
@@ -56,13 +56,17 @@ class Transport extends MagentoTransport implements TransportInterface
             return;
         }
 
-        $messageBuilder = $this->createMailgunMessage($this->parseMessage());
+        try {
+            $messageBuilder = $this->createMailgunMessage($this->parseMessage());
 
-        $mailgun = new Mailgun($this->config->privateKey(), $this->getHttpClient(), $this->config->endpoint());
-        $mailgun->setApiVersion($this->config->version());
-        $mailgun->setSslEnabled($this->config->ssl());
+            $mailgun = new Mailgun($this->config->privateKey(), $this->getHttpClient(), $this->config->endpoint());
+            $mailgun->setApiVersion($this->config->version());
+            $mailgun->setSslEnabled($this->config->ssl());
 
-        $mailgun->sendMessage($this->config->domain(), $messageBuilder->getMessage(), $messageBuilder->getFiles());
+            $mailgun->sendMessage($this->config->domain(), $messageBuilder->getMessage(), $messageBuilder->getFiles());
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**
@@ -92,9 +96,9 @@ class Transport extends MagentoTransport implements TransportInterface
     protected function createMailgunMessage(array $message)
     {
         $builder = new MessageBuilder();
-        $builder->setFromAddress($message['from']);
+        $builder->setFromAddress(reset($message['from']));
         $builder->setSubject($message['subject']);
-        foreach ($this->message->getRecipients() as $to) {
+        foreach ($message['to'] as $to) {
             $builder->addToRecipient($to);
         }
 

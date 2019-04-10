@@ -1,14 +1,6 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
 
-/**
- * Used in creating options for Yes|No|Specified config value selection
- *
- */
-namespace Tanolalano\Mailgun\Model\Config\Source;
+namespace MageMontreal\Mailgun\Model\Config\Source;
 
 class Endpoint implements \Magento\Framework\Option\ArrayInterface
 {

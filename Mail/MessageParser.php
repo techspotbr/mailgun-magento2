@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanolalano\Mailgun\Mail;
+namespace MageMontreal\Mailgun\Mail;
 
 use Magento\Framework\Mail\MessageInterface;
 
@@ -17,7 +17,7 @@ class MessageParser
      */
     public function __construct(MessageInterface $message)
     {
-        $this->message = $message;
+        $this->message = \Zend\Mail\Message::fromString($message->getRawMessage());
     }
 
     /**
@@ -25,37 +25,37 @@ class MessageParser
      */
     public function parse()
     {
-        $eol = "\n";
+        $html = '';
+        $text = '';
 
-        $html = "";
-        $text = "";
+        $contentType = $this->message->getHeaders()->get('content-type')->getType();
 
-        $htmlPart = $this->message->getBodyHtml();
-        if ($htmlPart) {
-            $html = $htmlPart->getContent($eol);
-        }
-        $textPart = $this->message->getBodyText();
-        if ($textPart) {
-            $text = $textPart->getContent($eol);
+        if ($contentType === 'text/html') {
+            $html = $this->message->getBody();
+        } else {
+            $text = $this->message->getBody();
         }
 
         $text = quoted_printable_decode($text);
         $html = quoted_printable_decode($html);
 
         $attachments = [];
-        foreach ($this->message->getParts() as $part) { /** @var \Zend_Mime_Part $part */
-            if ($part->disposition == 'attachment') {
-                $attachments[] = $part;
+
+        if ($this->message->getBody() instanceof Mime\Message) {
+            foreach ($this->message->getBody()->getParts() as /** @var \Zend\Mime\Part $part */ $part) {
+                if ($part->disposition == 'attachment') {
+                    $attachments[] = $part;
+                }
             }
         }
 
         return [
-            'from' => $this->message->getFrom(),
-            'reply-to' => $this->message->getReplyTo(),
+            'from' => $this->parseRecipients($this->message->getFrom()),
+            'reply-to' => $this->parseRecipients($this->message->getReplyTo()),
+            'to' => $this->parseRecipients($this->message->getTo()),
+            'cc' => $this->parseRecipients($this->message->getCc()),
+            'bcc' => $this->parseRecipients($this->message->getBcc()),
             'subject' => $this->message->getSubject(),
-            'to' => $this->parseRecipients('To'),
-            'cc' => $this->parseRecipients('Cc'),
-            'bcc' => $this->parseRecipients('Bcc'),
             'html' => $html ?: null,
             'text' => $text ?: null,
             'attachments' => $attachments,
@@ -63,33 +63,16 @@ class MessageParser
     }
 
     /**
-     * @param string $type
+     * @param \Zend\Mail\Header\AbstractAddressList $recipients
      *
      * @return array
      */
-    protected function parseRecipients($type)
+    protected function parseRecipients($recipients)
     {
-        $all = $this->message->getRecipients();
-
-        $headers = $this->message->getHeaders();
-
-        $recipients = isset($headers[$type]) ? $headers[$type] : [];
-
         $result = [];
-        foreach ($recipients as $key => $recipient) {
-            if ($key === 'append') {
-                continue;
-            }
 
-            if (preg_match('/<(.*)>/', $recipient, $matches)) {
-                $recipientAddress = $matches[1];
-            } else {
-                $recipientAddress = $recipient;
-            }
-
-            if (in_array($recipientAddress, $all)) {
-                $result[] = trim($recipient);
-            }
+        foreach ($recipients as $recipient) {
+            $result[] = $recipient->getEmail();
         }
 
         return $result;

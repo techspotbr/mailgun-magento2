@@ -1,9 +1,5 @@
 # Magento 2 Mailgun module
 
-[![Latest Stable Version](https://poser.pugx.org/tanolalano/mailgun-magento2/v/stable?format=flat-square)](https://packagist.org/packages/tanolalano/mailgun-magento2)
-[![Monthly Downloads](https://poser.pugx.org/tanolalano/mailgun-magento2/d/monthly?format=flat-square)](https://packagist.org/packages/tanolalano/mailgun-magento2)
-[![License](https://poser.pugx.org/tanolalano/mailgun-magento2/license?format=flat-square)](https://packagist.org/packages/tanolalano/mailgun-magento2)
-
 Send Magento's transactional e-mails with the [Mailgun API](http://www.mailgun.com/).
 
 ### Installation
@@ -11,7 +7,7 @@ Send Magento's transactional e-mails with the [Mailgun API](http://www.mailgun.c
 Install using composer
 
 ```bash
-composer require tanolalano/mailgun-magento2
+composer require magemontreal/mailgun-magento2
 ```
 
 ### Configuration
@@ -30,6 +26,8 @@ You can access the mail logs in your [Mailgun control panel](https://mailgun.com
 
 ## Changelog
 
+#### 1.0.0
+- Magento 2.2.8 and 2.3.1 compatibility
 #### 0.1.9
 - Using mailgun-php 2.4 the last version working with magento 2.2 - 2.2.6
 - Forked from [Andelux/Mailgun-Magento2](https://github.com/andelux/Mailgun-Magento2)
