@@ -25,19 +25,17 @@ class MessageParser
      */
     public function parse()
     {
-        $html = '';
-        $text = '';
+        $headerContentType = $this->message->getHeaders()->get('content-type');
 
-        $contentType = $this->message->getHeaders()->get('content-type')->getType();
+        $contentType = $headerContentType ? $headerContentType->getType() : 'text';
 
         if ($contentType === 'text/html') {
-            $html = $this->message->getBody();
+            $content = $this->message->getBody();
         } else {
-            $text = $this->message->getBody();
+            $content = $this->message->getBody();
         }
 
-        $text = quoted_printable_decode($text);
-        $html = quoted_printable_decode($html);
+        $content = quoted_printable_decode($content);
 
         $attachments = [];
 
@@ -56,8 +54,8 @@ class MessageParser
             'cc' => $this->parseRecipients($this->message->getCc()),
             'bcc' => $this->parseRecipients($this->message->getBcc()),
             'subject' => $this->message->getSubject(),
-            'html' => $html ?: null,
-            'text' => $text ?: null,
+            'html' => $contentType !== 'text' ? $content : null,
+            'text' => $contentType === 'text' ? $content : null,
             'attachments' => $attachments,
         ];
     }
