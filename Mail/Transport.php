@@ -2,96 +2,84 @@
 
 namespace MageMontreal\Mailgun\Mail;
 
-use MageMontreal\Mailgun\Helper\Config;
-use InvalidArgumentException;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Mail\MessageInterface;
-use Magento\Framework\Mail\Transport as MagentoTransport;
+use Http\Adapter\Guzzle6\Client as HttpClient;
 use Magento\Framework\Mail\TransportInterface;
 use Mailgun\Mailgun;
 use Mailgun\Messages\MessageBuilder;
+use Mailgun\Messages\Exceptions\TooManyParameters;
+use MageMontreal\Mailgun\Helper\Config;
 
-class Transport extends MagentoTransport implements TransportInterface
+class Transport
 {
-
     /**
-     * @var \Andelux\Mailgun\Helper\Config
+     * @var Config
      */
-    protected $config;
-
-    /**
-     * @var \Magento\Framework\Mail\MessageInterface
-     */
-    protected $message;
+    private $mailgunConfig;
 
     /**
      * Transport constructor.
      *
-     * @param \Magento\Framework\Mail\MessageInterface $message
-     * @param null                                     $parameters
+     * @param Config $config
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(MessageInterface $message, $parameters = null)
+    public function __construct(Config $config)
     {
-        parent::__construct($message, $parameters);
-
-        $this->config = ObjectManager::getInstance()->create(Config::class);
-        $this->message = $message;
+        $this->mailgunConfig = $config;
     }
 
     /**
-     * Send a mail using this transport
+     * @param TransportInterface $subject
+     * @param callable $proceed
      *
-     * @return void
-     *
-     * @throws \Exception
+     * @throws MailException
+     * @throws Zend_Exception
      */
-    public function sendMessage()
-    {
-        // If Mailgun Service is disabled, use the default mail transport
-        if (!$this->config->enabled()) {
-            parent::sendMessage();
+    public function aroundSendMessage(
+        TransportInterface $subject,
+        callable $proceed
+    ) {
+        if ($this->mailgunConfig->enabled()) {
+            try {
+                $messageBuilder = $this->createMailgunMessage($this->parseMessage());
 
-            return;
-        }
+                $mailgun = new Mailgun($this->config->privateKey(), $this->getHttpClient(), $this->config->endpoint());
+                $mailgun->setApiVersion($this->config->version());
+                $mailgun->setSslEnabled($this->config->ssl());
 
-        try {
-            $messageBuilder = $this->createMailgunMessage($this->parseMessage());
+                $mailgun->sendMessage($this->config->domain(), $messageBuilder->getMessage(), $messageBuilder->getFiles());
+            } catch (\Exception $e) {
 
-            $mailgun = new Mailgun($this->config->privateKey(), $this->getHttpClient(), $this->config->endpoint());
-            $mailgun->setApiVersion($this->config->version());
-            $mailgun->setSslEnabled($this->config->ssl());
-
-            $mailgun->sendMessage($this->config->domain(), $messageBuilder->getMessage(), $messageBuilder->getFiles());
-        } catch (\Exception $e) {
-
+            }
+        } else {
+            $proceed();
         }
     }
+
 
     /**
      * @return array
      */
     protected function parseMessage()
     {
-        $parser = new MessageParser($this->message);
+        $parser = new MessageParser($this->getMessage());
 
         return $parser->parse();
     }
 
     /**
-     * @return \Http\Client\HttpClient
+     * @return HttpClient
      */
     protected function getHttpClient()
     {
-        return new \Http\Adapter\Guzzle6\Client();
+        return new HttpClient();
     }
 
     /**
      * @param array $message
      *
-     * @return \Mailgun\Messages\MessageBuilder
-     * @throws \Mailgun\Messages\Exceptions\TooManyParameters
+     * @return MessageBuilder
+     * @throws TooManyParameters
      */
     protected function createMailgunMessage(array $message)
     {
@@ -118,7 +106,7 @@ class Transport extends MagentoTransport implements TransportInterface
             $builder->setTextBody($message['text']);
         }
 
-        foreach ($message['attachments'] as $attachment) { /** @var \Zend_Mime_Part $attachment */
+        foreach ($message['attachments'] as $attachment) {
             $tempPath = tempnam(sys_get_temp_dir(), 'attachment');
             file_put_contents($tempPath, $attachment->getRawContent());
             $builder->addAttachment($tempPath, $attachment->filename);
@@ -126,5 +114,4 @@ class Transport extends MagentoTransport implements TransportInterface
 
         return $builder;
     }
-
 }
