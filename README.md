@@ -7,7 +7,7 @@ Send Magento's transactional e-mails with the [Mailgun API](http://www.mailgun.c
 Install using composer
 
 ```bash
-composer require magemontreal/mailgun-magento2
+composer require techspot/mailgun-magento2
 ```
 
 ### Configuration
