@@ -1,6 +1,6 @@
 <?php
 
-namespace MageMontreal\Mailgun\Model\Config\Source;
+namespace Techspot\Mailgun\Model\Config\Source;
 
 class Endpoint implements \Magento\Framework\Option\ArrayInterface
 {

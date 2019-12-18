@@ -1,6 +1,6 @@
 <?php
 
-namespace MageMontreal\Mailgun\Mail;
+namespace Techspot\Mailgun\Mail;
 
 use Magento\Framework\Mail\MessageInterface;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace MageMontreal\Mailgun\Mail;
+namespace Techspot\Mailgun\Mail;
 
 use Http\Adapter\Guzzle6\Client as HttpClient;
 use Magento\Framework\Mail\TransportInterface;
 use Mailgun\Mailgun;
 use Mailgun\Messages\MessageBuilder;
 use Mailgun\Messages\Exceptions\TooManyParameters;
-use MageMontreal\Mailgun\Helper\Config;
+use Techspot\Mailgun\Helper\Config;
 
 class Transport
 {
